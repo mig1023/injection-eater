@@ -11,11 +11,15 @@ namespace InjectionEater.t
     class SQLinjection_test
     {
         [Test]
-        public void SimpleSQLinject_test()
+        public void SQLinject_simpletest1()
         {
-            string simpleInject = @"' UNION SELECT username, password FROM users--";
-            bool test = SQLinjection.Eat(ref simpleInject);
-            Assert.AreEqual(test, true);
+            Assert.That(!String.IsNullOrEmpty(SQLinjection.Eat(@"' UNION SELECT username, password FROM users--")), "sql#1");
+        }
+
+        [Test]
+        public void SQLinject_simpletest2()
+        {
+            Assert.That(String.IsNullOrEmpty(SQLinjection.Eat(@"some text that looks like an injection, because it contains the word UPDATE")), "sql#2");
         }
     }
 }

@@ -8,16 +8,13 @@ namespace InjectionEater
 {
     class SQLinjection
     {
-        public static bool Eat(ref string line)
+        public static string Eat(string line)
         {
-            foreach(string signature in SignatureList.signatures)
-                if (RegExp.Test(signature, line))
-                {
-                    line = String.Empty;
-                    return true;
-                }
+            foreach(SQLsignatures signature in SQLsignatures.list)
+                if (RegExp.Test(signature.Signature, line))
+                    return signature.Name;
 
-            return false;
+            return String.Empty;
         }
     }
 }

@@ -8,13 +8,31 @@ namespace InjectionEater
 {
     public class InjectionEater
     {
-        public static bool Eat(ref string line)
+        public static bool Eat(ref string line, out string detail)
         {
-            bool result = false;
+            string needToEatSomething = TryToEat(line);
 
-            result |= SQLinjection.Eat(ref line);
+            if (!String.IsNullOrEmpty(needToEatSomething))
+            {
+                line = String.Empty;
+                detail = needToEatSomething;
+                return true;
+            }
+            else
+            {
+                detail = String.Empty;
+                return false;
+            }
+        }
 
-            return result;
+        private static string TryToEat(string line)
+        {
+            string tryEatSQLinjection = SQLinjection.Eat(line);
+
+            if (!String.IsNullOrEmpty(tryEatSQLinjection))
+                return String.Format("SQL injection ({0})", tryEatSQLinjection);
+
+            return String.Empty;
         }
     }
 }

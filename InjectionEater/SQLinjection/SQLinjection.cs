@@ -14,6 +14,11 @@ namespace InjectionEater
                 if (RegExp.Test(signature.PrefixrCode + signature.Signature, StringClean.SQLclean(line)))
                     return signature.Name;
 
+            string heuristicPanic = SQLheuristic.Eat(line);
+
+            if (!String.IsNullOrEmpty(heuristicPanic))
+                return heuristicPanic;
+
             return String.Empty;
         }
     }

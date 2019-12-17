@@ -30,5 +30,12 @@ namespace InjectionEater.t
             string sql = @"' UN/**/ION SEL/**/ECT username, password FR/**/OM users--";
             Assert.That(!String.IsNullOrEmpty(SQLinjection.Eat(sql)), "obfuscate#1");
         }
+
+        [Test]
+        public void SQLheuristic_simpletest1()
+        {
+            string sql = @"' UNION SELECT username, password FROM users--";
+            Assert.That(String.IsNullOrEmpty(SQLheuristic.Eat(sql)), "heuristic#1");
+        }
     }
 }

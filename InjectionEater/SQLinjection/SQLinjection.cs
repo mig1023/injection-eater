@@ -11,7 +11,7 @@ namespace InjectionEater
         public static string Eat(string line)
         {
             foreach(SQLsignatures signature in SQLsignatures.list)
-                if (RegExp.Test(signature.Signature, line))
+                if (RegExp.Test(signature.PrefixrCode + signature.Signature, StringClean.SQLclean(line)))
                     return signature.Name;
 
             return String.Empty;

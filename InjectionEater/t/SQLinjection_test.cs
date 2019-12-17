@@ -13,13 +13,22 @@ namespace InjectionEater.t
         [Test]
         public void SQLinject_simpletest1()
         {
-            Assert.That(!String.IsNullOrEmpty(SQLinjection.Eat(@"' UNION SELECT username, password FROM users--")), "sql#1");
+            string sql = @"' UNION SELECT username, password FROM users--";
+            Assert.That(!String.IsNullOrEmpty(SQLinjection.Eat(sql)), "sql#1");
         }
 
         [Test]
         public void SQLinject_simpletest2()
         {
-            Assert.That(String.IsNullOrEmpty(SQLinjection.Eat(@"some text that looks like an injection, because it contains the word UPDATE")), "sql#2");
+            string text = @"some text that looks like an injection, because it contains the words UNION, SELECT and FROM etc";
+            Assert.That(String.IsNullOrEmpty(SQLinjection.Eat(text)), "sql#2");
+        }
+
+        [Test]
+        public void SQLinject_obfuscatetest1()
+        {
+            string sql = @"' UN/**/ION SEL/**/ECT username, password FR/**/OM users--";
+            Assert.That(!String.IsNullOrEmpty(SQLinjection.Eat(sql)), "obfuscate#1");
         }
     }
 }

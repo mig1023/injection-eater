@@ -10,13 +10,14 @@ namespace InjectionEater
     {
         public string Name = String.Empty;
         public string Signature = String.Empty;
+        public string PrefixrCode = @"(\|\||union)\s+";
 
         public static List<SQLsignatures> list = new List<SQLsignatures>()
         {
             new SQLsignatures
             {
                 Name ="type SELECT",
-                Signature = @"(^|\s)select(\s.*\s|\*)from\s",
+                Signature = @"select(\s.*\s|\*)from\s",
             },
             new SQLsignatures
             {

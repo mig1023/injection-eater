@@ -51,8 +51,10 @@
     <Compile Include="InjectionEater.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\RegExp.cs" />
+    <Compile Include="Services\StringClean.cs" />
     <Compile Include="SQLinjection\SQLsignatures.cs" />
     <Compile Include="SQLinjection\SQLinjection.cs" />
+    <Compile Include="t\Services_test.cs" />
     <Compile Include="t\SQLinjection_test.cs" />
   </ItemGroup>
   <ItemGroup>

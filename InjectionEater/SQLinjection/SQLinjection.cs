@@ -10,9 +10,10 @@ namespace InjectionEater
     {
         public static string Eat(string line)
         {
-            foreach(SQLsignatures signature in SQLsignatures.list)
-                if (RegExp.Test(signature.PrefixrCode + signature.Signature, StringClean.SQLclean(line)))
-                    return signature.Name;
+            string signaturePanic = SQLsignatures.Eat(line);
+
+            if (!String.IsNullOrEmpty(signaturePanic))
+                return signaturePanic;
 
             string heuristicPanic = SQLheuristic.Eat(line);
 

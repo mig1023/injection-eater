@@ -10,13 +10,11 @@ namespace InjectionEater
 {
     class SQLheuristic
     {
+        public static SQLiteConnection sqlBase = CreateDummyDB(@"heuristic.db");
+
         public static string Eat(string line)
         {
-            SQLiteConnection sqlBase = CreateDummyDB(@"heuristic.db");
-
-            string eatThis = SQLselectTest(String.Format("SELECT Name FROM Users WHERE Password = '{0}'", line), sqlBase);
-
-            return eatThis;
+            return SQLselectTest(String.Format("SELECT Name FROM Users WHERE Password = '{0}'", line), sqlBase);
         }
 
         private static SQLiteConnection CreateDummyDB(string SQLheuristicFileName)
@@ -53,6 +51,9 @@ namespace InjectionEater
             }
             catch (SQLiteException ex)
             {
+                if (RegExp.Test("SQL logic error", ex.Message))
+                    return "heuristic panic";
+
                 return String.Empty;
             }
 

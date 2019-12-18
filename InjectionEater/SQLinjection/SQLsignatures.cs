@@ -12,7 +12,7 @@ namespace InjectionEater
         public string Signature = String.Empty;
         public string PrefixrCode = @"(\|\||union)\s+";
 
-        public static List<SQLsignatures> list = new List<SQLsignatures>()
+        private static List<SQLsignatures> Signatures = new List<SQLsignatures>()
         {
             new SQLsignatures
             {
@@ -45,5 +45,14 @@ namespace InjectionEater
                 Signature = @"alter\s+(ignore\s+)?table\s.*\s(add|drop|change|alter)\s",
             },
         };
+
+        public static string Eat(string line)
+        {
+            foreach (SQLsignatures signature in Signatures)
+                if (RegExp.Test(signature.PrefixrCode + signature.Signature, StringClean.SQLclean(line)))
+                    return signature.Name;
+
+            return String.Empty;
+        }
     }
 }

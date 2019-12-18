@@ -14,20 +14,20 @@ namespace InjectionEater
 
         public static string Eat(string line)
         {
-            string quote = SQLselectTest(String.Format("SELECT Name FROM Users WHERE Password = '{0}'", line), sqlBase, logicErrorWarn: true);
+            foreach (char quote in new char[] { '\'', '"', ' ' })
+            {
+                string fullQuery = String.Format("SELECT Name FROM Users WHERE Password = {0}{1}{0}", quote, line);
 
-            if (!String.IsNullOrEmpty(quote))
-                return quote;
+                string[] queries = fullQuery.Split(';');
 
-            string dubleQuote = SQLselectTest(String.Format("SELECT Name FROM Users WHERE Password = \"{0}\"", line), sqlBase, logicErrorWarn: true);
+                foreach (string query in queries)
+                {
+                    string tryToEat = SQLselectTest(query, sqlBase, logicErrorWarn: (quote == ' ' ? false : true));
 
-            if (!String.IsNullOrEmpty(dubleQuote))
-                return dubleQuote;
-
-            string withoutQuote = SQLselectTest(String.Format("SELECT Name FROM Users WHERE Password = {0}", line), sqlBase);
-
-            if (!String.IsNullOrEmpty(withoutQuote))
-                return withoutQuote;
+                    if (!String.IsNullOrEmpty(tryToEat))
+                        return tryToEat;
+                }
+            }
 
             return String.Empty;
         }

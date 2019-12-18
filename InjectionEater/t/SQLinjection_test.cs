@@ -58,12 +58,5 @@ namespace InjectionEater.t
             string sql = @"1'; select 1,2,3";
             Assert.That(!String.IsNullOrEmpty(SQLheuristic.Eat(sql)), "heuristic#4");
         }
-        
-        [Test]
-        public void SQLinject_heuristic_test5()
-        {
-            string sql = @"1+and+ascii(lower(mid((select+pwd+from+users+limit+1,1),1,1)))=74";
-            Assert.That(!String.IsNullOrEmpty(SQLheuristic.Eat(sql)), "heuristic#5");
-        }
     }
 }

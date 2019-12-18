@@ -14,7 +14,22 @@ namespace InjectionEater
 
         public static string Eat(string line)
         {
-            return SQLselectTest(String.Format("SELECT Name FROM Users WHERE Password = '{0}'", line), sqlBase);
+            string quote = SQLselectTest(String.Format("SELECT Name FROM Users WHERE Password = '{0}'", line), sqlBase, logicErrorWarn: true);
+
+            if (!String.IsNullOrEmpty(quote))
+                return quote;
+
+            string dubleQuote = SQLselectTest(String.Format("SELECT Name FROM Users WHERE Password = \"{0}\"", line), sqlBase, logicErrorWarn: true);
+
+            if (!String.IsNullOrEmpty(dubleQuote))
+                return dubleQuote;
+
+            string withoutQuote = SQLselectTest(String.Format("SELECT Name FROM Users WHERE Password = {0}", line), sqlBase);
+
+            if (!String.IsNullOrEmpty(withoutQuote))
+                return withoutQuote;
+
+            return String.Empty;
         }
 
         private static SQLiteConnection CreateDummyDB(string SQLheuristicFileName)
@@ -40,7 +55,7 @@ namespace InjectionEater
             command.ExecuteNonQuery();
         }
 
-        private static string SQLselectTest(string sql, SQLiteConnection sqlBase)
+        private static string SQLselectTest(string sql, SQLiteConnection sqlBase, bool logicErrorWarn = false)
         {
             SQLiteCommand command = new SQLiteCommand(sql, sqlBase);
             SQLiteDataReader reader = null;
@@ -51,7 +66,7 @@ namespace InjectionEater
             }
             catch (SQLiteException ex)
             {
-                if (RegExp.Test("SQL logic error", ex.Message))
+                if (logicErrorWarn && RegExp.Test("SQL logic error", ex.Message))
                     return "heuristic panic";
 
                 return String.Empty;

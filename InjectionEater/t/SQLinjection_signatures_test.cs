@@ -23,7 +23,5 @@ namespace InjectionEater.t
             string text = @"some text that looks like an injection, because it contains the words UNION, SELECT and FROM etc";
             Assert.That(String.IsNullOrEmpty(SQLsignatures.Eat(text)), "sql#2");
         }
-
-        // https://www.owasp.org/index.php/SQL_Injection_Bypassing_WAF
     }
 }

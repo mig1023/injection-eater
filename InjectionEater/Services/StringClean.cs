@@ -10,7 +10,9 @@ namespace InjectionEater
     {
         public static string SQLclean(string line)
         {
-            return RegExp.Delete(line, @"/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/");
+            string decodedUrl = Uri.UnescapeDataString(line);
+
+            return RegExp.Delete(decodedUrl, @"/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/");
         }
     }
 }

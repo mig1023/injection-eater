@@ -17,6 +17,11 @@ namespace InjectionEater.t
             Assert.That(!String.IsNullOrEmpty(SQLsignatures.Eat(sql)), "obfuscate#1");
         }
 
-        // https://www.owasp.org/index.php/SQL_Injection_Bypassing_WAF
+        [Test]
+        public void SQLinject_signature_obfuscate_test2()
+        {
+            string sql = @"' %55%4eIO%4e%20%53E%4cECT%20username,%20password%20%46%52O%4d%20users--";
+            Assert.That(!String.IsNullOrEmpty(SQLsignatures.Eat(sql)), "obfuscate#2");
+        }
     }
 }

@@ -37,7 +37,5 @@ namespace InjectionEater.t
             string sql = @"1'; select 1,2,3";
             Assert.That(!String.IsNullOrEmpty(SQLheuristic.Eat(sql)), "heuristic#4");
         }
-
-        // https://www.owasp.org/index.php/SQL_Injection_Bypassing_WAF
     }
 }

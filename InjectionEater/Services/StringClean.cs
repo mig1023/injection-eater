@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace InjectionEater
@@ -10,9 +11,15 @@ namespace InjectionEater
     {
         public static string SQLclean(string line)
         {
-            string decodedUrl = Uri.UnescapeDataString(line);
+            return RegExp.Delete(Uri.UnescapeDataString(line), @"/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/");
+        }
 
-            return RegExp.Delete(decodedUrl, @"/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/");
+        public static string SQLkeyRepeatClean(string line)
+        {
+            foreach (string keyword in new string[] { "select", "union", "update", "insert", "drop", "delete", "alter" })
+                line = Regex.Replace(line, keyword, String.Empty, RegexOptions.IgnoreCase);
+                
+            return line;
         }
     }
 }

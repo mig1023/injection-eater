@@ -27,14 +27,14 @@ namespace InjectionEater.t
         [Test]
         public void SQLinject_heuristic_test3()
         {
-            string sql = @"1' where user = 't1' OR 1=1--";
+            string sql = @"1' WHERE user = 't1' OR 1=1--";
             Assert.That(!String.IsNullOrEmpty(SQLheuristic.Eat(sql)), "heuristic#3");
         }
 
         [Test]
         public void SQLinject_heuristic_test4()
         {
-            string sql = @"1'; select 1,2,3";
+            string sql = @"1'; SELECT 1,2,3";
             Assert.That(!String.IsNullOrEmpty(SQLheuristic.Eat(sql)), "heuristic#4");
         }
     }

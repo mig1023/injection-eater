@@ -17,7 +17,7 @@ namespace InjectionEater
             new SQLsignatures
             {
                 Name ="type SELECT",
-                Signature = @"select(\s.*\s|\*)from\s",
+                Signature = @"select(\s.*\s|\s?\*\s?)from\s",
             },
             new SQLsignatures
             {
@@ -49,8 +49,9 @@ namespace InjectionEater
         public static string Eat(string line)
         {
             foreach (SQLsignatures signature in Signatures)
-                if (RegExp.Test(signature.PrefixrCode + signature.Signature, StringClean.SQLclean(line)))
-                    return signature.Name;
+                foreach (string cleanLine in new string[] { StringClean.SQLclean(line), StringClean.SQLkeyRepeatClean(line) })
+                    if (RegExp.Test(signature.PrefixrCode + signature.Signature, cleanLine))
+                        return signature.Name;
 
             return String.Empty;
         }

@@ -37,5 +37,26 @@ namespace InjectionEater.t
             string sql = @"1'; SELECT 1,2,3";
             Assert.That(!String.IsNullOrEmpty(SQLheuristic.Eat(sql)), "heuristic#4");
         }
+
+        [Test]
+        public void SQLinject_heuristic_test5()
+        {
+            string sql = "or 1-- -' or 1 or '1\"or 1 or\"";
+            Assert.That(!String.IsNullOrEmpty(SQLheuristic.Eat(sql)), "heuristic#5");
+        }
+
+        [Test]
+        public void SQLinject_heuristic_test6()
+        {
+            string sql = @"or 1 or 2 or 3 or 4 -- 2 1";
+            Assert.That(String.IsNullOrEmpty(SQLheuristic.Eat(sql)), "heuristic#6");
+        }
+
+        [Test]
+        public void SQLinject_heuristic_test7()
+        {
+            string sql = @"1;select 1&id=2 3 from users where id=1--";
+            Assert.That(!String.IsNullOrEmpty(SQLheuristic.Eat(sql)), "heuristic#7");
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace InjectionEater
     {
         public string Name = String.Empty;
         public string Signature = String.Empty;
-        public string PrefixrCode = @"(\|\||union)\s+";
+        public string PrefixrCode = @"(\|\||union|and)\s+";
 
         private static List<SQLsignatures> Signatures = new List<SQLsignatures>()
         {
@@ -43,6 +43,11 @@ namespace InjectionEater
             {
                 Name ="type ALTER",
                 Signature = @"alter\s+(ignore\s+)?table\s.*\s(add|drop|change|alter)\s",
+            },
+            new SQLsignatures
+            {
+                Name ="type EQUALITY",
+                Signature = @"\s(.+)\s*=\s*$1",
             },
         };
 

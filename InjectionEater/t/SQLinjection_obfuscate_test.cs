@@ -37,5 +37,12 @@ namespace InjectionEater.t
             string sql = @"' UNIunionON SEselectLECT username, password FROM users--";
             Assert.That(!String.IsNullOrEmpty(SQLsignatures.Eat(sql)), "obfuscate#4");
         }
+
+        [Test]
+        public void SQLinject_signature_obfuscate_test5()
+        {
+            string sql = @"1 OR 1=1 ";
+            Assert.That(!String.IsNullOrEmpty(SQLsignatures.Eat(sql)), "obfuscate#5");
+        }
     }
 }

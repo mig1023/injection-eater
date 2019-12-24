@@ -43,7 +43,7 @@ namespace InjectionEater
 
             SQLquery(@"CREATE TABLE Users (Name VARCHAR(20), Password VARCHAR(20))", sqlBase);
 
-            for (int i = 0; i < 10; i++)
+            foreach (string login in new string[] { "root", "admin", "username", "default", "guest" })
                 SQLquery(@"INSERT INTO Users (Name, Password) VALUES ('root', 'password')", sqlBase);
 
             return sqlBase;
@@ -75,14 +75,12 @@ namespace InjectionEater
             if (reader.FieldCount > 1)
                 return "heuristic panic";
 
-            int rowNumber = 0;
 
-            while (reader.Read())
-                rowNumber += 1;
+            bool hasRows = reader.HasRows;
 
             reader.Close();
 
-            return (rowNumber <= 1 ? String.Empty : "heuristic panic");
+            return (hasRows ? "heuristic panic" : String.Empty);
         }
     }
 }

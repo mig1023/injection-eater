@@ -60,8 +60,8 @@ namespace InjectionEater
             {
                 Name ="type EQUALITY",
                 Signatures = new string[] {
-                    @"(\d+)\s*=\s*\1",
-                    @"(\d+)\s*!=\s*(\d+)",
+                    @"(.+)\s*=\s*\1",
+                    @"(.+)\s*!=\s*(.+)",
                 },
             },
         };

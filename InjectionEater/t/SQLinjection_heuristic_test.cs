@@ -30,13 +30,14 @@ namespace InjectionEater.t
             }
         }
 
+        [Test]
         public void SQLinject_heuristic_test_notFounded()
         {
             int sqlTestIndex = 0;
 
             string[] sqls = new string[] {
                 @"some text that looks like an injection, because it contains the words UNION, SELECT and FROM etc",
-                "or 1-- -' or 1 or '1\"or 1 or\"",
+                @"or 1 or 2 or 3 or 4 -- 2 1",
             };
 
             foreach (string sql in sqls)

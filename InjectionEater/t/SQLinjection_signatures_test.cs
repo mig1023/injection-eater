@@ -19,6 +19,7 @@ namespace InjectionEater.t
                 @"' UNION SELECT username, password FROM users--",
                 @"1 OR 1=1",
                 @"1 AND 1!=2",
+                @"1 OR 0x50=0x50",
             };
 
             foreach (string sql in sqls)

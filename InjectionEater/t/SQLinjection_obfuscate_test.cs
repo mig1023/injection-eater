@@ -11,31 +11,22 @@ namespace InjectionEater.t
     class SQLinjection_obfuscate_test
     {
         [Test]
-        public void SQLinject_signature_obfuscate_test1()
+        public void SQLinject_obfuscate_test_founded()
         {
-            string sql = @"' UN/**/ION SEL/**/ECT username, password FR/**/OM users--";
-            Assert.That(!String.IsNullOrEmpty(SQLsignatures.Eat(sql)), "obfuscate#1");
-        }
+            int sqlTestIndex = 0;
 
-        [Test]
-        public void SQLinject_signature_obfuscate_test2()
-        {
-            string sql = @"' %55%4eIO%4e%20%53E%4cECT%20username,%20password%20%46%52O%4d%20users--";
-            Assert.That(!String.IsNullOrEmpty(SQLsignatures.Eat(sql)), "obfuscate#2");
-        }
+            string[] sqls = new string[] {
+                @"' UN/**/ION SEL/**/ECT username, password FR/**/OM users--",
+                @"' %55%4eIO%4e%20%53E%4cECT%20username,%20password%20%46%52O%4d%20users--",
+                @"' UNiOn SelECt username, password fROm users--",
+                @"' UNIunionON SEselectLECT username, password FROM users--"
+            };
 
-        [Test]
-        public void SQLinject_signature_obfuscate_test3()
-        {
-            string sql = @"' UNiOn SelECt username, password fROm users--";
-            Assert.That(!String.IsNullOrEmpty(SQLsignatures.Eat(sql)), "obfuscate#3");
-        }
-
-        [Test]
-        public void SQLinject_signature_obfuscate_test4()
-        {
-            string sql = @"' UNIunionON SEselectLECT username, password FROM users--";
-            Assert.That(!String.IsNullOrEmpty(SQLsignatures.Eat(sql)), "obfuscate#4");
+            foreach (string sql in sqls)
+            {
+                sqlTestIndex += 1;
+                Assert.That(!String.IsNullOrEmpty(SQLsignatures.Eat(sql)), String.Format("sql #{0} <-- fail", sqlTestIndex));
+            }
         }
     }
 }

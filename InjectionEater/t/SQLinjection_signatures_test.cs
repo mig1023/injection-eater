@@ -11,31 +11,37 @@ namespace InjectionEater.t
     class SQLinjection_signatures_test
     {
         [Test]
-        public void SQLinject_siganture_test1()
+        public void SQLinject_siganture_test_founded()
         {
-            string sql = @"' UNION SELECT username, password FROM users--";
-            Assert.That(!String.IsNullOrEmpty(SQLsignatures.Eat(sql)), "sql#1");
+            int sqlTestIndex = 0;
+
+            string[] sqls = new string[] {
+                @"' UNION SELECT username, password FROM users--",
+                @"1 OR 1=1",
+                @"1 AND 1!=2",
+            };
+
+            foreach (string sql in sqls)
+            {
+                sqlTestIndex += 1;
+                Assert.That(!String.IsNullOrEmpty(SQLsignatures.Eat(sql)), String.Format("sql #{0} <-- fail", sqlTestIndex));
+            }
         }
 
         [Test]
-        public void SQLinject_siganture_test2()
+        public void SQLinject_siganture_test_notFounded()
         {
-            string text = @"some text that looks like an injection, because it contains the words UNION, SELECT and FROM etc";
-            Assert.That(String.IsNullOrEmpty(SQLsignatures.Eat(text)), "sql#2");
-        }
+            int sqlTestIndex = 0;
 
-        [Test]
-        public void SQLinject_signature_test3()
-        {
-            string sql = @"1 OR 1=1";
-            Assert.That(!String.IsNullOrEmpty(SQLsignatures.Eat(sql)), "sql#3");
-        }
+            string[] sqls = new string[] {
+                @"some text that looks like an injection, because it contains the words UNION, SELECT and FROM etc",
+            };
 
-        [Test]
-        public void SQLinject_signature_test4()
-        {
-            string sql = @"1 AND 1!=2";
-            Assert.That(!String.IsNullOrEmpty(SQLsignatures.Eat(sql)), "sql#4");
+            foreach (string sql in sqls)
+            {
+                sqlTestIndex += 1;
+                Assert.That(String.IsNullOrEmpty(SQLsignatures.Eat(sql)), String.Format("sql #{0} <-- fail", sqlTestIndex));
+            }
         }
     }
 }

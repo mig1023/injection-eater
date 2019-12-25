@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace InjectionEater.t
 {
     [TestFixture]
-    class Services_test
+    class Other_test
     {
         [Test]
         public void Regexp_Test_found()

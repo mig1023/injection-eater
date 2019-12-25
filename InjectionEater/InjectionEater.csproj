@@ -60,7 +60,7 @@
     <Compile Include="SQLinjection\SQLheuristic.cs" />
     <Compile Include="SQLinjection\SQLsignatures.cs" />
     <Compile Include="SQLinjection\SQLinjection.cs" />
-    <Compile Include="t\Services_test.cs" />
+    <Compile Include="t\Other_test.cs" />
     <Compile Include="t\SQLinjection_heuristic_test.cs" />
     <Compile Include="t\SQLinjection_obfuscate_test.cs" />
     <Compile Include="t\SQLinjection_signatures_test.cs" />

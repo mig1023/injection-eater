@@ -64,6 +64,9 @@
     <Compile Include="t\SQLinjection_heuristic_test.cs" />
     <Compile Include="t\SQLinjection_obfuscate_test.cs" />
     <Compile Include="t\SQLinjection_signatures_test.cs" />
+    <Compile Include="t\XSSinjection_signatures_test.cs" />
+    <Compile Include="XSSinjection\XSSinjection.cs" />
+    <Compile Include="XSSinjection\XSSsignatures.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

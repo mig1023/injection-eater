@@ -32,6 +32,11 @@ namespace InjectionEater
             if (!String.IsNullOrEmpty(tryEatSQLinjection))
                 return String.Format("SQL injection ({0})", tryEatSQLinjection);
 
+            string tryEatXSSinjection = XSSinjection.Eat(line);
+
+            if (!String.IsNullOrEmpty(tryEatXSSinjection))
+                return String.Format("XSS injection ({0})", tryEatXSSinjection);
+
             return String.Empty;
         }
     }

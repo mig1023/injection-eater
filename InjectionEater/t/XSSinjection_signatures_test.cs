@@ -7,37 +7,30 @@ namespace InjectionEater.t
     class XSSinjection_signatures_test
     {
         [Test]
-        public void XSSinject_siganture_test_founded()
+        public void XSSinject_siganture_test_banal_founded()
         {
-            int xssTestIndex = 0;
-
-            string[] xssTests = new string[] {
-                @"<script>alert('vulnerable!')</script>",
-                @"<img src=" + '"' + @"javascript:alert('vulnerable!');" + '"' + ">",
-                @"<img src=onmouseover=" + '"' + @"alert('vulnerable!');" + '"' + ">",
-            };
-
-            foreach (string xss in xssTests)
-            {
-                xssTestIndex += 1;
-                Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(xss)), String.Format("xss #{0} <-- fail", xssTestIndex));
-            }
+            string sql = @"<script>alert('vulnerable!')</script>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss fail");
         }
 
         [Test]
-        public void XSSinject_siganture_test_notFounded()
+        public void XSSinject_siganture_test_img_founded()
         {
-            int xssTestIndex = 0;
+            string sql = @"<img src=" + '"' + @"javascript:alert('vulnerable!');" + '"' + ">";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss fail");
+        }
 
-            string[] xssTests = new string[] {
-                @"<img src=" + '"' + @"path/image.jpeg" + '"' + ">",
-            };
+        [Test]
+        public void XSSinject_siganture_test_onmousemove_founded()
+        {
+            string sql = @"<img src=onmouseover=" + '"' + @"alert('vulnerable!');" + '"' + ">";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss fail");
+        }
 
-            foreach (string xss in xssTests)
-            {
-                xssTestIndex += 1;
-                Assert.That(String.IsNullOrEmpty(XSSsignatures.Eat(xss)), String.Format("xss #{0} <-- fail", xssTestIndex));
-            }
+        public void XSSinject_siganture_test_img_notFounded()
+        {
+            string sql = @"<img src=" + '"' + @"path/image.jpeg" + '"' + ">";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss fail");
         }
     }
 }

@@ -7,19 +7,10 @@ namespace InjectionEater.t
     class XSSinjection_obfuscate_test
     {
         [Test]
-        public void XSSinject_obfuscate_test_founded()
+        public void XSSinject_obfuscate_test_case_founded()
         {
-            int xssTestIndex = 0;
-
-            string[] allXSS = new string[] {
-                @"<img src=" + '"' + @"jAvAsCrIPt:alert('xss');" + '"' + ">",
-            };
-
-            foreach (string xss in allXSS)
-            {
-                xssTestIndex += 1;
-                Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(xss)), String.Format("xss #{0} <-- fail", xssTestIndex));
-            }
+            string xss = @"<img src=" + '"' + @"jAvAsCrIPt:alert('xss');" + '"' + ">";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(xss)), "xss case fail");
         }
     }
 }

@@ -7,38 +7,38 @@ namespace InjectionEater.t
     class SQLinjection_signatures_test
     {
         [Test]
-        public void SQLinject_siganture_test_founded()
+        public void SQLinject_siganture_test_union_founded()
         {
-            int sqlTestIndex = 0;
-
-            string[] sqls = new string[] {
-                @"' UNION SELECT username, password FROM users--",
-                @"1 OR 1=1",
-                @"1 AND 1!=2",
-                @"1 OR 0x50=0x50",
-            };
-
-            foreach (string sql in sqls)
-            {
-                sqlTestIndex += 1;
-                Assert.That(!String.IsNullOrEmpty(SQLsignatures.Eat(sql)), String.Format("sql #{0} <-- fail", sqlTestIndex));
-            }
+            string sql = @"' UNION SELECT username, password FROM users--";
+            Assert.That(!String.IsNullOrEmpty(SQLsignatures.Eat(sql)), "sql fail");
         }
 
         [Test]
-        public void SQLinject_siganture_test_notFounded()
+        public void SQLinject_siganture_test_equal_founded()
         {
-            int sqlTestIndex = 0;
+            string sql = @"1 OR 1=1";
+            Assert.That(!String.IsNullOrEmpty(SQLsignatures.Eat(sql)), "sql fail");
+        }
 
-            string[] sqls = new string[] {
-                @"some text that looks like an injection, because it contains the words UNION, SELECT and FROM etc",
-            };
+        [Test]
+        public void SQLinject_siganture_test_notequal_founded()
+        {
+            string sql = @"1 AND 1!=2";
+            Assert.That(!String.IsNullOrEmpty(SQLsignatures.Eat(sql)), "sql fail");
+        }
 
-            foreach (string sql in sqls)
-            {
-                sqlTestIndex += 1;
-                Assert.That(String.IsNullOrEmpty(SQLsignatures.Eat(sql)), String.Format("sql #{0} <-- fail", sqlTestIndex));
-            }
+        [Test]
+        public void SQLinject_siganture_test_something_equal_founded()
+        {
+            string sql = @"1 OR 0x50=0x50";
+            Assert.That(!String.IsNullOrEmpty(SQLsignatures.Eat(sql)), "sql fail");
+        }
+
+        [Test]
+        public void SQLinject_siganture_test_uniontext_notFounded()
+        {
+            string sql = @"some text that looks like an injection, because it contains the words UNION, SELECT and FROM etc";
+            Assert.That(String.IsNullOrEmpty(SQLsignatures.Eat(sql)), "not sql fail");
         }
     }
 }

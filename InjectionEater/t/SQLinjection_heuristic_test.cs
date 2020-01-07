@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace InjectionEater.t
@@ -11,40 +7,52 @@ namespace InjectionEater.t
     class SQLinjection_heuristic_test
     {
         [Test]
-        public void SQLinject_heuristic_test_founded()
+        public void SQLinject_heuristic_test_union_founded()
         {
-            int sqlTestIndex = 0;
-
-            string[] sqls = new string[] {
-                @"' UNION SELECT username, password FROM users--",
-                @"1' WHERE user = 't1' OR 1=1--",
-                @"1'; SELECT 1,2,3",
-                "or 1-- -' or 1 or '1\"or 1 or\"",
-                @"1;select 1&id=2 3 from users where id=1--",
-            };
-
-            foreach (string sql in sqls)
-            {
-                sqlTestIndex += 1;
-                Assert.That(!String.IsNullOrEmpty(SQLheuristic.Eat(sql)), String.Format("sql #{0} <-- fail", sqlTestIndex));
-            }
+            string sql = @"' UNION SELECT username, password FROM users--";
+            Assert.That(!String.IsNullOrEmpty(SQLheuristic.Eat(sql)), "heuristic fail");
         }
 
         [Test]
-        public void SQLinject_heuristic_test_notFounded()
+        public void SQLinject_heuristic_test_equal_founded()
         {
-            int sqlTestIndex = 0;
+            string sql = @"1' WHERE user = 't1' OR 1=1--";
+            Assert.That(!String.IsNullOrEmpty(SQLheuristic.Eat(sql)), "heuristic fail");
+        }
 
-            string[] sqls = new string[] {
-                @"some text that looks like an injection, because it contains the words UNION, SELECT and FROM etc",
-                @"or 1 or 2 or 3 or 4 -- 2 1",
-            };
+        [Test]
+        public void SQLinject_heuristic_test_select123_founded()
+        {
+            string sql = @"1'; SELECT 1,2,3";
+            Assert.That(!String.IsNullOrEmpty(SQLheuristic.Eat(sql)), "heuristic fail");
+        }
 
-            foreach (string sql in sqls)
-            {
-                sqlTestIndex += 1;
-                Assert.That(String.IsNullOrEmpty(SQLheuristic.Eat(sql)), String.Format("sql #{0} <-- fail", sqlTestIndex));
-            }
+        [Test]
+        public void SQLinject_heuristic_test_or_founded()
+        {
+            string sql = "or 1-- -' or 1 or '1\"or 1 or\"";
+            Assert.That(!String.IsNullOrEmpty(SQLheuristic.Eat(sql)), "heuristic fail");
+        }
+
+        [Test]
+        public void SQLinject_heuristic_test_ampersand_founded()
+        {
+            string sql = @"1;select 1&id=2 3 from users where id=1--";
+            Assert.That(!String.IsNullOrEmpty(SQLheuristic.Eat(sql)), "heuristic fail");
+        }
+
+        [Test]
+        public void SQLinject_heuristic_test_uniontext_notFounded()
+        {
+            string sql = @"some text that looks like an injection, because it contains the words UNION, SELECT and FROM etc";
+            Assert.That(String.IsNullOrEmpty(SQLheuristic.Eat(sql)), "not sql heuristic fail");
+        }
+
+        [Test]
+        public void SQLinject_heuristic_test_ortext_notFounded()
+        {
+            string sql = @"or 1 or 2 or 3 or 4 -- 2 1";
+            Assert.That(String.IsNullOrEmpty(SQLheuristic.Eat(sql)), "not sql heuristic fail");
         }
     }
 }

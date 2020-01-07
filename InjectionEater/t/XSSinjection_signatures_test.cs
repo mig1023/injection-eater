@@ -14,6 +14,7 @@ namespace InjectionEater.t
             string[] xssTests = new string[] {
                 @"<script>alert('vulnerable!')</script>",
                 @"<img src=" + '"' + @"javascript:alert('vulnerable!');" + '"' + ">",
+                @"<img src=onmouseover=" + '"' + @"alert('vulnerable!');" + '"' + ">",
             };
 
             foreach (string xss in xssTests)

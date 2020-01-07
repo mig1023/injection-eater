@@ -27,6 +27,13 @@ namespace InjectionEater
                     @"<\s*img\s+.*src\s*=.*script",
                 },
             },
+            new XSSsignatures
+            {
+                Name ="type IMGONMOUSE",
+                Signatures = new string[] {
+                    @"<\s*img\s+.*src\s*=.*onmouseover",
+                },
+            },
         };
 
         public static string Eat(string line)

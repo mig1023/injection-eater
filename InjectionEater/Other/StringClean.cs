@@ -14,6 +14,11 @@ namespace InjectionEater
             return RegExp.Delete(Uri.UnescapeDataString(line), @"/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/");
         }
 
+        public static string XSSclean(string line)
+        {
+            return Uri.UnescapeDataString(line);
+        }
+
         public static string SQLkeyRepeatClean(string line)
         {
             foreach (string keyword in new string[] { "select", "union", "update", "insert", "drop", "delete", "alter" })

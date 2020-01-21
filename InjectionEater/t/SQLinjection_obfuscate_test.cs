@@ -14,7 +14,7 @@ namespace InjectionEater.t
         }
 
         [Test]
-        public void SQLinject_obfuscate_test_url_founded()
+        public void SQLinject_obfuscate_test_urlcode_founded()
         {
             string sql = @"' %55%4eIO%4e%20%53E%4cECT%20username,%20password%20%46%52O%4d%20users--";
             Assert.That(!String.IsNullOrEmpty(SQLsignatures.Eat(sql)), "sql fail");

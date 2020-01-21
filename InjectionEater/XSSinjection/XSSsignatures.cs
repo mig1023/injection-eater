@@ -40,7 +40,7 @@ namespace InjectionEater
         {
             foreach (XSSsignatures currentSignatures in AllSignatures)
                 foreach (string signature in currentSignatures.Signatures)
-                    foreach (string cleanLine in new string[] { line })
+                    foreach (string cleanLine in new string[] { line, StringClean.XSSclean(line) })
                         if (RegExp.Test(signature, cleanLine))
                             return currentSignatures.Name;
 

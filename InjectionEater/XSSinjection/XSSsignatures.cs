@@ -31,7 +31,14 @@ namespace InjectionEater
             {
                 Name ="type IMGONMOUSE",
                 Signatures = new string[] {
-                    @"<\s*img\s+.*src\s*=.*onmouseover",
+                    @"<\s*img\s+.*onmouseover",
+                },
+            },
+            new XSSsignatures
+            {
+                Name ="type IMGONERROR",
+                Signatures = new string[] {
+                    @"<\s*img\s+.*src\s*=.*onerror",
                 },
             },
         };

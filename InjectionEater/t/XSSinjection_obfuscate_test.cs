@@ -19,5 +19,25 @@ namespace InjectionEater.t
             string xss = @"%3Cimg%20src%3Djavascript%3Aalert%28%27xss%27%29%3B%3E";
             Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(xss)), "xss urlcode fail");
         }
+
+        [Test]
+        public void XSSinject_obfuscate_test_default_founded()
+        {
+            string xss = @"<IMG SRC =# onmouseover=alert('xxs')>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(xss)), "xss def1 fail");
+        }
+
+        [Test]
+        public void XSSinject_obfuscate_test_default_by_empty_founded()
+        {
+            string xss = @"<IMG SRC= onmouseover=alert('xxs')>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(xss)), "xss def2 fail");
+        }
+
+        public void XSSinject_obfuscate_test_default_by_entirely_founded()
+        {
+            string xss = @"<IMG onmouseover=alert('xxs')>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(xss)), "xss def3 fail");
+        }
     }
 }

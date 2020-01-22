@@ -11,6 +11,9 @@ namespace InjectionEater
         public string Name = String.Empty;
         public string[] Signatures;
 
+        public static string onList = "(onmouseover|onerror|oninput|onfilterchange|onload|onpropertychange|onqt_error)";
+        public static string quot = "(" + '"' + @"|')";
+
         private static List<XSSsignatures> AllSignatures = new List<XSSsignatures>()
         {
             new XSSsignatures
@@ -18,27 +21,40 @@ namespace InjectionEater
                 Name ="type SCRIPT",
                 Signatures = new string[] {
                     @"<\s*script",
+                    @"href\s*=.*script:",
+                    @"value\s*=.*script:",
+                    @"alt\s*=.*script:",
+                    @"expression\s*\(\s*(java)?script\s*:"
                 },
             },
             new XSSsignatures
             {
-                Name ="type IMGSRC",
+                Name ="type SRC SCRIPT",
                 Signatures = new string[] {
-                    @"<\s*img\s+.*src\s*=.*script",
+                    @"<\s*(img|embed|image)\s+.*src\s*=.*script",
                 },
             },
             new XSSsignatures
             {
-                Name ="type IMGONMOUSE",
+                Name ="type ONSOMETHING",
                 Signatures = new string[] {
-                    @"<\s*img\s+.*onmouseover",
+                    onList + @"\s*=.*script:",
                 },
             },
             new XSSsignatures
             {
-                Name ="type IMGONERROR",
+                Name ="type CLEAN FUNCTION",
                 Signatures = new string[] {
-                    @"<\s*img\s+.*src\s*=.*onerror",
+                    onList + @"\s*=.*" + quot + @".*\(.*\).*" + quot,
+                    onList + @"\s*=.*.*\(.*\).*",
+                },
+            },
+            new XSSsignatures
+            {
+                Name ="type NOTATION HACK",
+                Signatures = new string[] {
+                    @"background\s*=\s*" + quot + @"\s*(java)?script\s*:",
+                    @"-o-link\s*:\s*" + quot + @"(java)?script\s*:",
                 },
             },
         };

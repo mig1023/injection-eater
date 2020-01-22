@@ -566,5 +566,523 @@ namespace InjectionEater.t
             string sql = @"<SCRIPT/XSS SRC='http://website.com/xss.js'></SCRIPT>";
             Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss80 fail");
         }
+
+        [Test]
+        public void XSSinject_siganture_test_xss81_founded()
+        {
+            string sql = @"<BODY onload!#$%&()*~+-_.,:;?@[/|\]^`=alert('XSS')>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss81 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss82_founded()
+        {
+            string sql = @"<SCRIPT/SRC='http://website.com/xss.js'></SCRIPT>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss82 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss83_founded()
+        {
+            string sql = @"<<SCRIPT>alert('XSS');//<</SCRIPT>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss83 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss84_founded()
+        {
+            string sql = @"<SCRIPT SRC=http://website.com/xss.js?< B >";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss84 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss85_founded()
+        {
+            string sql = @"<SCRIPT SRC=//ha.ckers.org/.j>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss85 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss86_founded()
+        {
+            string sql = @"<IMG SRC='javascript:alert('XSS')'";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss86 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss87_founded()
+        {
+            string sql = @"<iframe src=http://website.com/scriptlet.html <";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss87 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss88_founded()
+        {
+            string sql = @"<img src=``&NewLine; onerror=alert(1)&NewLine;";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss88 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss89_founded()
+        {
+            string sql = @"</TITLE><SCRIPT>alert('XSS');</SCRIPT>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss89 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss90_founded()
+        {
+            string sql = @"<INPUT TYPE='IMAGE' SRC='javascript:alert('XSS');'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss90 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss91_founded()
+        {
+            string sql = @"<BODY BACKGROUND='javascript:alert('XSS')'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss91 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss92_founded()
+        {
+            string sql = @"<IMG DYNSRC='javascript:alert('XSS')'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss92 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss93_founded()
+        {
+            string sql = @"<IMG LOWSRC='javascript:alert('XSS')'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss93 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss94_founded()
+        {
+            string sql = @"<STYLE>li {list-style-image: url('javascript:alert('XSS')');}</STYLE><UL><LI>XSS</br>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss94 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss95_founded()
+        {
+            string sql = @"<IMG SRC='vbscript:msgbox('XSS')'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss95 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss96_founded()
+        {
+            string sql = @"<IMG SRC='livescript:'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss96 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss97_founded()
+        {
+            string sql = @"<BODY ONLOAD=alert('XSS')>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss97 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss98_founded()
+        {
+            string sql = @"<BGSOUND SRC='javascript:alert('XSS');'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss98 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss99_founded()
+        {
+            string sql = @"<BR SIZE='&{alert('XSS')}'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss99 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss100_founded()
+        {
+            string sql = @"<LINK REL='stylesheet' HREF='javascript:alert('XSS');'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss100 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss101_founded()
+        {
+            string sql = @"<LINK REL='stylesheet' HREF='http://website.com/xss.css'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss101 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss102_founded()
+        {
+            string sql = @"<STYLE>@import'http://website.com/xss.css';</STYLE>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss102 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss103_founded()
+        {
+            string sql = @"<META HTTP-EQUIV='Link' Content='<http://website.com/xss.css>; REL=stylesheet'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss103 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss104_founded()
+        {
+            string sql = @"<STYLE>BODY{-moz-binding:url('http://website.com/xssmoz.xml#xss')}</STYLE>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss104 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss105_founded()
+        {
+            string sql = @"<form><isindex formaction='javascript&colon;confirm(1)'";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss105 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss106_founded()
+        {
+            string sql = @"<IMG STYLE='xss:expr/*XSS*/ession(alert('XSS'))'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss106 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss107_founded()
+        {
+            string sql = @"exp/*<A STYLE='no\xss:noxss('*//*');xss:ex/*XSS*//*/*/pression(alert('XSS'))'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss107 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss108_founded()
+        {
+            string sql = @"<STYLE TYPE='text/javascript'>alert('XSS');</STYLE>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss108 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss109_founded()
+        {
+            string sql = @"<STYLE>.XSS{background-image:url('javascript:alert('XSS')');}</STYLE><A CLASS=XSS></A>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss109 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss110_founded()
+        {
+            string sql = @"<STYLE type='text/css'>BODY{background:url('javascript:alert('XSS')')}</STYLE>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss110 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss111_founded()
+        {
+            string sql = @"<STYLE type='text/css'>BODY{background:url('javascript:alert('XSS')')}</STYLE>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss111 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss112_founded()
+        {
+            string sql = @"<XSS STYLE='xss:expression(alert('XSS'))'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss112 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss113_founded()
+        {
+            string sql = @"<XSS STYLE='behavior: url(xss.htc);'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss113 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss114_founded()
+        {
+            string sql = @"¼script¾alert(¢XSS¢)¼/script¾";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss114 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss115_founded()
+        {
+            string sql = @"<META HTTP-EQUIV='refresh' CONTENT='0;url=javascript:alert('XSS');'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss115 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss116_founded()
+        {
+            string sql = @"<META HTTP-EQUIV='refresh' CONTENT='0;url=data:text/html base64,PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4K'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss116 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss117_founded()
+        {
+            string sql = @"<META HTTP-EQUIV='refresh' CONTENT='0; URL=http://;URL=javascript:alert('XSS');'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss117 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss118_founded()
+        {
+            string sql = @"<IFRAME SRC='javascript:alert('XSS');'></IFRAME>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss118 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss119_founded()
+        {
+            string sql = @"<IFRAME SRC=# onmouseover='alert(document.cookie)'></IFRAME>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss119 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss120_founded()
+        {
+            string sql = @"<FRAMESET><FRAME SRC='javascript:alert('XSS');'></FRAMESET>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss120 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss121_founded()
+        {
+            string sql = @"<TABLE BACKGROUND='javascript:alert('XSS')'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss121 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss122_founded()
+        {
+            string sql = @"<TABLE><TD BACKGROUND='javascript:alert('XSS')'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss122 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss123_founded()
+        {
+            string sql = @"<DIV STYLE='background-image: url(javascript:alert('XSS'))'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss123 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss124_founded()
+        {
+            string sql = @"<DIV STYLE='background-image:\0075\0072\006C\0028'\006a\0061\0076\0061\0073\0063\0072\0069\0070\0074\003a\0061\006c\0065\0072\0074\0028.1027\0058.1053\0053\0027\0029'\0029'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss124 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss125_founded()
+        {
+            string sql = @"<DIV STYLE='background-image: url(&#1;javascript:alert('XSS'))'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss125 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss126_founded()
+        {
+            string sql = @"<DIV STYLE='width: expression(alert('XSS'));'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss126 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss127_founded()
+        {
+            string sql = @"<BASE HREF='javascript:alert('XSS');//'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss127 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss128_founded()
+        {
+            string sql = @"<OBJECT TYPE='text/x-scriptlet' DATA='http://ha.ckers.org/scriptlet.html'></OBJECT>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss128 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss129_founded()
+        {
+            string sql = @"<EMBED SRC='data:image/svg+xml;base64,PHN2ZyB4bWxuczpzdmc9Imh0dH A6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv MjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hs aW5rIiB2ZXJzaW9uPSIxLjAiIHg9IjAiIHk9IjAiIHdpZHRoPSIxOTQiIGhlaWdodD0iMjAw IiBpZD0ieHNzIj48c2NyaXB0IHR5cGU9InRleHQvZWNtYXNjcmlwdCI+YWxlcnQoIlh TUyIpOzwvc2NyaXB0Pjwvc3ZnPg==' type='image/svg+xml' AllowScriptAccess='always'></EMBED>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss129 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss130_founded()
+        {
+            string sql = @"<SCRIPT SRC='http://ha.ckers.org/xss.jpg'></SCRIPT>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss130 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss131_founded()
+        {
+            string sql = @"<!--#exec cmd='/bin/echo '<SCR''--><!--#exec cmd='/bin/echo 'IPT SRC=http://ha.ckers.org/xss.js></SCRIPT>''-->";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss131 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss132_founded()
+        {
+            string sql = @"<? echo('<SCR)';echo('IPT>alert('XSS')</SCRIPT>'); ?>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss132 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss133_founded()
+        {
+            string sql = @"<IMG SRC='http://www.thesiteyouareon.com/somecommand.php?somevariables=maliciouscode'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss133 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss134_founded()
+        {
+            string sql = @"Redirect 302 /a.jpg http://victimsite.com/admin.asp&deleteuser";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss134 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss135_founded()
+        {
+            string sql = @"<META HTTP-EQUIV='Set-Cookie' Content='USERID=<SCRIPT>alert('XSS')</SCRIPT>'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss135 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss136_founded()
+        {
+            string sql = @"<HEAD><META HTTP-EQUIV='CONTENT-TYPE' CONTENT='text/html; charset=UTF-7'> </HEAD>+ADw-SCRIPT+AD4-alert('XSS');+ADw-/SCRIPT+AD4-";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss136 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss137_founded()
+        {
+            string sql = @"<SCRIPT a='>' SRC='http://ha.ckers.org/xss.js'></SCRIPT>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss137 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss138_founded()
+        {
+            string sql = @"<SCRIPT ='>' SRC='http://ha.ckers.org/xss.js'></SCRIPT>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss138 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss139_founded()
+        {
+            string sql = @"<SCRIPT a='>' '' SRC='http://ha.ckers.org/xss.js'></SCRIPT>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss139 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss140_founded()
+        {
+            string sql = @"<SCRIPT 'a='>'' SRC='http://ha.ckers.org/xss.js'></SCRIPT>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss140 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss141_founded()
+        {
+            string sql = @"<SCRIPT a=`>` SRC='http://ha.ckers.org/xss.js'></SCRIPT>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss141 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss142_founded()
+        {
+            string sql = @"<SCRIPT a='>'>' SRC='http://ha.ckers.org/xss.js'></SCRIPT>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss142 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss143_founded()
+        {
+            string sql = @"<SCRIPT>document.write('<SCRI');</SCRIPT>PT SRC='http://ha.ckers.org/xss.js'></SCRIPT>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss143 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss144_founded()
+        {
+            string sql = @"<A HREF='http://66.102.7.147/'>XSS</A>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss144 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss145_founded()
+        {
+            string sql = @"<A HREF='http://%77%77%77%2E%67%6F%6F%67%6C%65%2E%63%6F%6D'>XSS</A>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss145 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss146_founded()
+        {
+            string sql = @"<A HREF='http://1113982867/'>XSS</A>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss146 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss147_founded()
+        {
+            string sql = @"<A HREF='http://0x42.0x0000066.0x7.0x93/'>XSS</A>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss147 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss148_founded()
+        {
+            string sql = @"<A HREF='http://0102.0146.0007.00000223/'>XSS</A>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss148 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss149_founded()
+        {
+            string sql = @"<A HREF='htt p://6 6.000146.0x7.147/'>XSS</A>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss149 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss150_founded()
+        {
+            string sql = @"<iframe src='&Tab;javascript:prompt(1)&Tab;'>";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss150 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss151_founded()
+        {
+            string sql = @"<svg><style>{font-family&colon;'<iframe/onload=confirm(1)>'";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss151 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss152_founded()
+        {
+            string sql = @"<input/onmouseover='javaSCRIPT&colon;confirm&lpar;1&rpar;'";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss152 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss153_founded()
+        {
+            string sql = @"<sVg><scRipt >alert&lpar;1&rpar; {Opera}";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss153 fail");
+        }
+
+        [Test]
+        public void XSSinject_siganture_test_xss154_founded()
+        {
+            string sql = @"<img/src=`` onerror=this.onerror=confirm(1)";
+            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss154 fail");
+        }
     }
 }

@@ -70,7 +70,7 @@ namespace InjectionEater
         {
             foreach (SQLsignatures currentSignatures in AllSignatures)
                 foreach (string signature in currentSignatures.Signatures)
-                    foreach (string cleanLine in new string[] { line, StringClean.SQLclean(line), StringClean.SQLkeyRepeatClean(line) })
+                    foreach (string cleanLine in new string[] { line, StringClean.SQLorXSSclean(line), StringClean.SQLkeyRepeatClean(line) })
                         if (RegExp.Test(currentSignatures.PrefixrCode + signature, cleanLine))
                             return currentSignatures.Name;
 

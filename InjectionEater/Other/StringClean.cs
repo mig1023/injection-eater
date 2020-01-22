@@ -9,14 +9,9 @@ namespace InjectionEater
 {
     class StringClean
     {
-        public static string SQLclean(string line)
+        public static string SQLorXSSclean(string line)
         {
             return RegExp.Delete(Uri.UnescapeDataString(line), @"/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/");
-        }
-
-        public static string XSSclean(string line)
-        {
-            return Uri.UnescapeDataString(line);
         }
 
         public static string SQLkeyRepeatClean(string line)

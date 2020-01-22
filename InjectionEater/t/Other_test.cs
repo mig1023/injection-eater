@@ -37,7 +37,7 @@ namespace InjectionEater.t
         [Test]
         public void StringClean_SQLclean()
         {
-            Assert.AreEqual("sometext", StringClean.SQLclean("some/*long\n \ncomment*/text"), "sqlclean#1");
+            Assert.AreEqual("sometext", StringClean.SQLorXSSclean("some/*long\n \ncomment*/text"), "sqlclean#1");
         }
     }
 }

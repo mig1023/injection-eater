@@ -24,9 +24,11 @@ namespace InjectionEater
                     @"href\s*=.*script:",
                     @"value\s*=.*script:",
                     @"alt\s*=.*script:",
-                    @"url\s*\(\s*" + quot + @"(java)?script\s*",
+                    @"url\s*\(\s*" + quot + @"?(java)?script\s*",
                     @"expression\s*\(\s*(java)?script\s*:",
                     @"iframe\s+src\s*=",
+                    @"formaction\s*=\s*" + quot + @"\s*javascript",
+                    @":\s*expression\s*\(",
                 },
             },
             new XSSsignatures
@@ -44,7 +46,7 @@ namespace InjectionEater
             {
                 Name = "type SRC SCRIPT",
                 Signatures = new string[] {
-                    @"<\s*(input|img|embed|image|bgsound)\s+.*src\s*=.*script",
+                    @"<\s*(input|img|embed|image|frame|bgsound)\s+.*src\s*=.*script",
                 },
             },
             new XSSsignatures
@@ -58,7 +60,7 @@ namespace InjectionEater
             {
                 Name = "type ONSOMETHING",
                 Signatures = new string[] {
-                    onList + @"\s*=.*script:",
+                    onList + @"\s*=.*(java)?script",
                 },
             },
             new XSSsignatures

@@ -913,7 +913,7 @@ namespace InjectionEater.t
         [Test]
         public void XSSinject_siganture_test_xss130_founded()
         {
-            string sql = @"<SCRIPT SRC='http://ha.ckers.org/xss.jpg'></SCRIPT>";
+            string sql = @"<SCRIPT SRC='http://website.com/xss.jpg'></SCRIPT>";
             Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss130 fail");
         }
 
@@ -934,14 +934,14 @@ namespace InjectionEater.t
         [Test]
         public void XSSinject_siganture_test_xss133_founded()
         {
-            string sql = @"<IMG SRC='http://www.thesiteyouareon.com/somecommand.php?somevariables=maliciouscode'>";
+            string sql = @"<IMG SRC='http://website.com/somecommand.php?somevariables=maliciouscode'>";
             Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss133 fail");
         }
 
         [Test]
         public void XSSinject_siganture_test_xss134_founded()
         {
-            string sql = @"Redirect 302 /a.jpg http://victimsite.com/admin.asp&deleteuser";
+            string sql = @"Redirect 302 /a.jpg http://website.com/admin.asp&deleteuser";
             Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss134 fail");
         }
 
@@ -962,56 +962,56 @@ namespace InjectionEater.t
         [Test]
         public void XSSinject_siganture_test_xss137_founded()
         {
-            string sql = @"<SCRIPT a='>' SRC='http://ha.ckers.org/xss.js'></SCRIPT>";
+            string sql = @"<SCRIPT a='>' SRC='http://website.com/xss.js'></SCRIPT>";
             Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss137 fail");
         }
 
         [Test]
         public void XSSinject_siganture_test_xss138_founded()
         {
-            string sql = @"<SCRIPT ='>' SRC='http://ha.ckers.org/xss.js'></SCRIPT>";
+            string sql = @"<SCRIPT ='>' SRC='http://website.com/xss.js'></SCRIPT>";
             Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss138 fail");
         }
 
         [Test]
         public void XSSinject_siganture_test_xss139_founded()
         {
-            string sql = @"<SCRIPT a='>' '' SRC='http://ha.ckers.org/xss.js'></SCRIPT>";
+            string sql = @"<SCRIPT a='>' '' SRC='http://website.com/xss.js'></SCRIPT>";
             Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss139 fail");
         }
 
         [Test]
         public void XSSinject_siganture_test_xss140_founded()
         {
-            string sql = @"<SCRIPT 'a='>'' SRC='http://ha.ckers.org/xss.js'></SCRIPT>";
+            string sql = @"<SCRIPT 'a='>'' SRC='http://website.com/xss.js'></SCRIPT>";
             Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss140 fail");
         }
 
         [Test]
         public void XSSinject_siganture_test_xss141_founded()
         {
-            string sql = @"<SCRIPT a=`>` SRC='http://ha.ckers.org/xss.js'></SCRIPT>";
+            string sql = @"<SCRIPT a=`>` SRC='http://website.com/xss.js'></SCRIPT>";
             Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss141 fail");
         }
 
         [Test]
         public void XSSinject_siganture_test_xss142_founded()
         {
-            string sql = @"<SCRIPT a='>'>' SRC='http://ha.ckers.org/xss.js'></SCRIPT>";
+            string sql = @"<SCRIPT a='>'>' SRC='http://website.com/xss.js'></SCRIPT>";
             Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss142 fail");
         }
 
         [Test]
         public void XSSinject_siganture_test_xss143_founded()
         {
-            string sql = @"<SCRIPT>document.write('<SCRI');</SCRIPT>PT SRC='http://ha.ckers.org/xss.js'></SCRIPT>";
+            string sql = @"<SCRIPT>document.write('<SCRI');</SCRIPT>PT SRC='http://website.com/xss.js'></SCRIPT>";
             Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss143 fail");
         }
 
         [Test]
         public void XSSinject_siganture_test_xss144_founded()
         {
-            string sql = @"<A HREF='http://66.102.7.147/'>XSS</A>";
+            string sql = @"<A HREF='http://website.com/'>XSS</A>";
             Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss144 fail");
         }
 

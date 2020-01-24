@@ -29,6 +29,16 @@ namespace InjectionEater
                     @"iframe\s+src\s*=",
                     @"formaction\s*=\s*" + quot + @"\s*javascript",
                     @":\s*expression\s*\(",
+                    @"url\s*=\s*javascript\s*:",
+                    @"url\s*=\s*data\s*:",
+                    @"url\s*\(.*javascript\s*:",
+                },
+            },
+            new XSSsignatures
+            {
+                Name = "type EXTSOURCES",
+                Signatures = new string[] {
+                    @"href=\s*" + quot + @"\s*http",
                 },
             },
             new XSSsignatures
@@ -40,6 +50,7 @@ namespace InjectionEater
                     @"<\s*style.*import",
                     @"content\s*=\s*" + quot + @".*rel\s*=\s*stylesheet",
                     @"-moz-binding\s*:\s*url\s*\(" + quot,
+                    @"behavior\s*:\s*url\s*\(",
                 },
             },
             new XSSsignatures

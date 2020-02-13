@@ -39,6 +39,8 @@ namespace InjectionEater
                 Name = "type EXTSOURCES",
                 Signatures = new string[] {
                     @"href=\s*" + quot + @"\s*http",
+                    @"OBJECT.+scriptlet.+DATA\s*=.*http",
+                    @"IPT\s+SRC\s*=.*http"
                 },
             },
             new XSSsignatures
@@ -57,7 +59,7 @@ namespace InjectionEater
             {
                 Name = "type SRC SCRIPT",
                 Signatures = new string[] {
-                    @"<\s*(input|img|embed|image|frame|bgsound)\s+.*src\s*=.*script",
+                    @"<\s*(input|img|embed|image|frame|bgsound)\s+.*src\s*=.*(script|http)",
                 },
             },
             new XSSsignatures
@@ -65,6 +67,13 @@ namespace InjectionEater
                 Name = "type INVOKE",
                 Signatures = new string[] {
                     @"=" + quot + @"&{.*\(.*\)}",
+                },
+            },
+            new XSSsignatures
+            {
+                Name = "type REDIRECT",
+                Signatures = new string[] {
+                    @"redirect.*302.*http",
                 },
             },
             new XSSsignatures

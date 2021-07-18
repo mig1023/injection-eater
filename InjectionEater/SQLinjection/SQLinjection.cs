@@ -10,17 +10,10 @@ namespace InjectionEater
     {
         public static string Eat(string line)
         {
-            string signaturePanic = SQLsignatures.Eat(line);
+            if (SQLheuristic.Eat(line))
+                return "heuristic panic";
 
-            if (!String.IsNullOrEmpty(signaturePanic))
-                return signaturePanic;
-
-            string heuristicPanic = SQLheuristic.Eat(line);
-
-            if (!String.IsNullOrEmpty(heuristicPanic))
-                return heuristicPanic;
-
-            return String.Empty;
+            return SQLsignatures.Eat(line);
         }
     }
 }

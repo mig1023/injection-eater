@@ -12,24 +12,18 @@ namespace InjectionEater
     {
         public static SQLiteConnection sqlBase = CreateDummyDB(@"heuristic.db");
 
-        public static string Eat(string line)
+        public static bool Eat(string line)
         {
             foreach (char quote in new char[] { '\'', '"', ' ' })
             {
-                string fullQuery = String.Format("SELECT Name FROM Users WHERE Password = {0}{1}{0}", quote, line);
-
-                string[] queries = fullQuery.Split(';');
+                string[] queries = String.Format("SELECT Name FROM Users WHERE Password = {0}{1}{0}", quote, line).Split(';');
 
                 foreach (string query in queries)
-                {
-                    string tryToEat = SQLselectTest(query, sqlBase, logicErrorWarn: (quote == ' ' ? false : true));
-
-                    if (!String.IsNullOrEmpty(tryToEat))
-                        return tryToEat;
-                }
+                    if (SQLselectTest(query, sqlBase, logicErrorWarn: (quote != ' ')))
+                        return true;
             }
 
-            return String.Empty;
+            return false;
         }
 
         private static SQLiteConnection CreateDummyDB(string SQLheuristicFileName)
@@ -38,24 +32,31 @@ namespace InjectionEater
                 File.Delete(SQLheuristicFileName);
 
             SQLiteConnection.CreateFile(SQLheuristicFileName);
+
             SQLiteConnection sqlBase = new SQLiteConnection(String.Format("Data Source={0};Version=3;", SQLheuristicFileName));
+
             sqlBase.Open();
 
             SQLquery(@"CREATE TABLE Users (Name VARCHAR(20), Password VARCHAR(20))", sqlBase);
 
-            foreach (string login in new string[] { "root", "admin", "username", "default", "guest" })
-                SQLquery(@"INSERT INTO Users (Name, Password) VALUES ('root', 'password')", sqlBase);
+            List<string> logins = new List<String>
+            {
+                "root",
+                "admin",
+                "username",
+                "default",
+                "guest"
+            };
+
+            foreach (string login in logins)
+                SQLquery(String.Format("INSERT INTO Users (Name, Password) VALUES ('{0}', 'injectionEaterPassword')", login), sqlBase);
 
             return sqlBase;
         }
 
-        private static void SQLquery(string sql, SQLiteConnection sqlBase)
-        {
-            SQLiteCommand command = new SQLiteCommand(sql, sqlBase);
-            command.ExecuteNonQuery();
-        }
+        private static void SQLquery(string sql, SQLiteConnection sqlBase) => new SQLiteCommand(sql, sqlBase).ExecuteNonQuery();
 
-        private static string SQLselectTest(string sql, SQLiteConnection sqlBase, bool logicErrorWarn = false)
+        private static bool SQLselectTest(string sql, SQLiteConnection sqlBase, bool logicErrorWarn = false)
         {
             SQLiteCommand command = new SQLiteCommand(sql, sqlBase);
             SQLiteDataReader reader = null;
@@ -67,20 +68,23 @@ namespace InjectionEater
             catch (SQLiteException ex)
             {
                 if (logicErrorWarn && RegExp.Test("SQL logic error", ex.Message))
-                    return "heuristic panic";
+                    return true;
 
-                return String.Empty;
+                return false;
             }
 
             if (reader.FieldCount > 1)
-                return "heuristic panic";
+                return true;
 
+            while (reader.Read())
+                if (reader.GetString(1).Contains("injectionEaterPassword"))
+                    return true;
 
             bool hasRows = reader.HasRows;
 
             reader.Close();
 
-            return (hasRows ? "heuristic panic" : String.Empty);
+            return hasRows;
         }
     }
 }

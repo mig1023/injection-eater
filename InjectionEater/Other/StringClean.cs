@@ -9,7 +9,7 @@ namespace InjectionEater
 {
     class StringClean
     {
-        public static string SQLorXSSclean(string line)
+        public static string SQLclean(string line)
         {
             return RegExp.Delete(Uri.UnescapeDataString(line), @"/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/");
         }

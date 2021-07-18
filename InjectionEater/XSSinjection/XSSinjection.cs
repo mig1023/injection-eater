@@ -8,14 +8,6 @@ namespace InjectionEater
 {
     class XSSinjection
     {
-        public static string Eat(string line)
-        {
-            string signaturePanic = SQLsignatures.Eat(line);
-
-            if (!String.IsNullOrEmpty(signaturePanic))
-                return signaturePanic;
-
-            return String.Empty;
-        }
+        public static string Eat(string line) => XSSsignatures.Eat(line);
     }
 }
